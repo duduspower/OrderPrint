@@ -1,0 +1,4 @@
+add file clas for handle uploadeing files 
+revise about uploadeing files to pring boot 
+upload liquidbase schema 
+make application running (finally)
