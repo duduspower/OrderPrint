@@ -1,0 +1,27 @@
+CREATE TABLE address{
+
+}
+
+CREATE TABLE credit_card{
+
+}
+
+CREATE TABLE app_order{
+
+}
+
+CREATE TABLE personal_data{
+
+}
+
+CREATE TABLE product{
+
+}
+
+CREATE TABLE user_contact{
+
+}
+
+CREATE TABLE app_user{
+
+}

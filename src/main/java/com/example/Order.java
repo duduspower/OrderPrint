@@ -3,6 +3,7 @@ package com.example;
 import javax.persistence.*;
 
 @Entity
+@Table(name = "app_order")
 public class Order {
 
     @Id
