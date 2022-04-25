@@ -1,9 +1,7 @@
 package com.example;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
+import java.time.LocalDateTime;
 
 @Entity
 public class UserContact {
@@ -15,12 +13,27 @@ public class UserContact {
     private String email;
     private String phoneNumber;
 
+    private LocalDateTime createdAt;
+    private LocalDateTime updatedAt;
+
     public UserContact() {
     }
 
-    public UserContact(String email, String phoneNumber) {
+    public UserContact(String email, String phoneNumber, LocalDateTime createdAt, LocalDateTime updatedAt) {
         this.email = email;
         this.phoneNumber = phoneNumber;
+        this.createdAt = createdAt;
+        this.updatedAt = updatedAt;
+    }
+
+    @PrePersist
+    private void createdAt(){
+        this.createdAt = LocalDateTime.now();
+    }
+
+    @PreUpdate
+    private void updatedAt(){
+        this.updatedAt = LocalDateTime.now();
     }
 
     public int getId() {
@@ -45,5 +58,21 @@ public class UserContact {
 
     public void setPhoneNumber(String phoneNumber) {
         this.phoneNumber = phoneNumber;
+    }
+
+    public LocalDateTime getCreatedAt() {
+        return createdAt;
+    }
+
+    public void setCreatedAt(LocalDateTime createdAt) {
+        this.createdAt = createdAt;
+    }
+
+    public LocalDateTime getUpdatedAt() {
+        return updatedAt;
+    }
+
+    public void setUpdatedAt(LocalDateTime updatedAt) {
+        this.updatedAt = updatedAt;
     }
 }

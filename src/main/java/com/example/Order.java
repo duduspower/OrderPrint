@@ -1,9 +1,12 @@
 package com.example;
 
 import javax.persistence.*;
+import java.time.LocalDateTime;
+import java.util.List;
+import java.util.Set;
 
-@Entity
-@Table(name = "app_order")
+@Entity(name = "app_order")
+@Embeddable
 public class Order {
 
     @Id
@@ -11,22 +14,42 @@ public class Order {
     private int id;
 
     @ManyToOne
-    @JoinTable
+    @JoinColumn(name = "user_id")
     private User user;
 
     private float cost;
 
     @ManyToMany
-    @JoinTable
-    private Product product;
+    private Set<Product> product;
+
+    private LocalDateTime createdAt;
+    private LocalDateTime updatedAt;
 
     public Order() {
     }
 
-    public Order(User user, float cost, Product product) {
+    public Order(User user, float cost, Set<Product> product, LocalDateTime createdAt, LocalDateTime updatedAt) {
         this.user = user;
         this.cost = cost;
         this.product = product;
+        this.createdAt = createdAt;
+        this.updatedAt = updatedAt;
+    }
+
+    public Order(User user, float cost, Set<Product> product) {
+        this.user = user;
+        this.cost = cost;
+        this.product = product;
+    }
+
+    @PrePersist
+    private void createdAt(){
+        this.createdAt = LocalDateTime.now();
+    }
+
+    @PreUpdate
+    private void updatedAt(){
+        this.updatedAt = LocalDateTime.now();
     }
 
     public int getId() {
@@ -53,11 +76,27 @@ public class Order {
         this.cost = cost;
     }
 
-    public Product getProduct() {
+    public Set<Product> getProduct() {
         return product;
     }
 
-    public void setProduct(Product product) {
+    public void setProduct(Set<Product> product) {
         this.product = product;
+    }
+
+    public LocalDateTime getCreatedAt() {
+        return createdAt;
+    }
+
+    public void setCreatedAt(LocalDateTime createdAt) {
+        this.createdAt = createdAt;
+    }
+
+    public LocalDateTime getUpdatedAt() {
+        return updatedAt;
+    }
+
+    public void setUpdatedAt(LocalDateTime updatedAt) {
+        this.updatedAt = updatedAt;
     }
 }

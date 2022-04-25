@@ -1,17 +1,19 @@
 package com.example;
 
 import javax.persistence.*;
+import java.time.LocalDateTime;
+import java.util.List;
+import java.util.Set;
 
 @Entity
-public class Adress {
+public class Address {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private int id;
 
-    @ManyToMany
-    @JoinTable
-    private User users;
+    @ManyToMany(cascade = CascadeType.ALL)
+    private Set<User> users;
 
     private String country;
     private String state;
@@ -20,10 +22,13 @@ public class Adress {
     private String localNumber;
     private String description;
 
-    public Adress() {
+    private LocalDateTime createdAt;
+    private LocalDateTime updatedAt;
+
+    public Address() {
     }
 
-    public Adress(User users, String country, String state, String postcode, String street, String localNumber, String description) {
+    public Address(Set<User> users, String country, String state, String postcode, String street, String localNumber, String description, LocalDateTime createdAt, LocalDateTime updatedAt) {
         this.users = users;
         this.country = country;
         this.state = state;
@@ -31,6 +36,18 @@ public class Adress {
         this.street = street;
         this.localNumber = localNumber;
         this.description = description;
+        this.createdAt = createdAt;
+        this.updatedAt = updatedAt;
+    }
+
+    @PrePersist
+    private void createdAt(){
+        this.createdAt = LocalDateTime.now();
+    }
+
+    @PreUpdate
+    private void updatedAt(){
+        this.updatedAt = LocalDateTime.now();
     }
 
     public int getId() {
@@ -41,11 +58,11 @@ public class Adress {
         this.id = id;
     }
 
-    public User getUsers() {
+    public Set<User> getUsers() {
         return users;
     }
 
-    public void setUsers(User users) {
+    public void setUsers(Set<User> users) {
         this.users = users;
     }
 
@@ -95,5 +112,21 @@ public class Adress {
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    public LocalDateTime getCreatedAt() {
+        return createdAt;
+    }
+
+    public void setCreatedAt(LocalDateTime createdAt) {
+        this.createdAt = createdAt;
+    }
+
+    public LocalDateTime getUpdatedAt() {
+        return updatedAt;
+    }
+
+    public void setUpdatedAt(LocalDateTime updatedAt) {
+        this.updatedAt = updatedAt;
     }
 }

@@ -1,8 +1,10 @@
 package com.example;
 
-import liquibase.pro.packaged.I;
 
 import javax.persistence.*;
+import java.time.LocalDateTime;
+import java.util.List;
+import java.util.Set;
 
 @Entity
 public class PersonalData {
@@ -17,17 +19,32 @@ public class PersonalData {
     private String username;
 
     @OneToMany
-    @JoinTable
-    private UserContact userContact;
+    private Set<UserContact> userContact;
+
+    private LocalDateTime createdAt;
+    private LocalDateTime updatedAt;
+
 
     public PersonalData() {
     }
 
-    public PersonalData(String name, String surname, String username, UserContact userContact) {
+    public PersonalData(String name, String surname, String username, Set<UserContact> userContact, LocalDateTime createdAt, LocalDateTime updatedAt) {
         this.name = name;
         this.surname = surname;
         this.username = username;
         this.userContact = userContact;
+        this.createdAt = createdAt;
+        this.updatedAt = updatedAt;
+    }
+
+    @PrePersist
+    private void createdAt(){
+        this.createdAt = LocalDateTime.now();
+    }
+
+    @PreUpdate
+    private void updatedAt(){
+        this.updatedAt = LocalDateTime.now();
     }
 
     public int getId() {
@@ -62,11 +79,27 @@ public class PersonalData {
         this.username = username;
     }
 
-    public UserContact getUserContact() {
+    public Set<UserContact> getUserContact() {
         return userContact;
     }
 
-    public void setUserContact(UserContact userContact) {
+    public void setUserContact(Set<UserContact> userContact) {
         this.userContact = userContact;
+    }
+
+    public LocalDateTime getCreatedAt() {
+        return createdAt;
+    }
+
+    public void setCreatedAt(LocalDateTime createdAt) {
+        this.createdAt = createdAt;
+    }
+
+    public LocalDateTime getUpdatedAt() {
+        return updatedAt;
+    }
+
+    public void setUpdatedAt(LocalDateTime updatedAt) {
+        this.updatedAt = updatedAt;
     }
 }

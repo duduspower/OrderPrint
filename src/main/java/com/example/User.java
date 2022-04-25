@@ -1,9 +1,12 @@
 package com.example;
 
 import javax.persistence.*;
+import java.time.LocalDateTime;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 
-@Entity
-@Table(name = "app_user")
+@Entity(name = "app_user")
 public class User {
 
     @Id
@@ -11,29 +14,41 @@ public class User {
     private int id;
 
     @OneToOne
-    @JoinTable
+    @JoinColumn
     private PersonalData personalData;
 
     @ManyToMany
-    @JoinTable
-    private Adress adreses;
+    private Set<Address> addresses;
 
     @ManyToMany
-    @JoinTable
-    private CreditCard creditCards;
+    private Set<CreditCard> creditCards = new HashSet<>();
 
     @OneToMany
-    @JoinTable
-    private Order orders;
+    private Set<Order> orders;
+
+    private LocalDateTime createdAt;
+    private LocalDateTime updatedAt;
 
     public User() {
     }
 
-    public User(PersonalData personalData, Adress adreses, CreditCard creditCards, Order orders) {
+    public User(PersonalData personalData, Set<Address> addresses, Set<CreditCard> creditCards, Set<Order> orders, LocalDateTime createdAt, LocalDateTime updatedAt) {
         this.personalData = personalData;
-        this.adreses = adreses;
+        this.addresses = addresses;
         this.creditCards = creditCards;
         this.orders = orders;
+        this.createdAt = createdAt;
+        this.updatedAt = updatedAt;
+    }
+
+    @PrePersist
+    private void createdAt(){
+        this.createdAt = LocalDateTime.now();
+    }
+
+    @PreUpdate
+    private void updatedAt(){
+        this.updatedAt = LocalDateTime.now();
     }
 
     public int getId() {
@@ -52,27 +67,43 @@ public class User {
         this.personalData = personalData;
     }
 
-    public Adress getAdreses() {
-        return adreses;
+    public Set<Address> getAddresses() {
+        return addresses;
     }
 
-    public void setAdreses(Adress adreses) {
-        this.adreses = adreses;
+    public void setAddresses(Set<Address> addresses) {
+        this.addresses = addresses;
     }
 
-    public CreditCard getCreditCards() {
+    public Set<CreditCard> getCreditCards() {
         return creditCards;
     }
 
-    public void setCreditCards(CreditCard creditCards) {
+    public void setCreditCards(Set<CreditCard> creditCards) {
         this.creditCards = creditCards;
     }
 
-    public Order getOrders() {
+    public Set<Order> getOrders() {
         return orders;
     }
 
-    public void setOrders(Order orders) {
+    public void setOrders(Set<Order> orders) {
         this.orders = orders;
+    }
+
+    public LocalDateTime getCreatedAt() {
+        return createdAt;
+    }
+
+    public void setCreatedAt(LocalDateTime createdAt) {
+        this.createdAt = createdAt;
+    }
+
+    public LocalDateTime getUpdatedAt() {
+        return updatedAt;
+    }
+
+    public void setUpdatedAt(LocalDateTime updatedAt) {
+        this.updatedAt = updatedAt;
     }
 }
