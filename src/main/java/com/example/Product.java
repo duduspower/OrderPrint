@@ -16,22 +16,19 @@ public class Product {
     @JoinColumn
     private PrintFile printFile;
 
+    private double cost;
+
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
 
     public Product() {
     }
 
-    public Product(PrintFile printFile, LocalDateTime createdAt, LocalDateTime updatedAt) {
+    public Product(PrintFile printFile, double cost, LocalDateTime createdAt, LocalDateTime updatedAt) {
         this.printFile = printFile;
+        this.cost = cost;
         this.createdAt = createdAt;
         this.updatedAt = updatedAt;
-    }
-
-    public Product(int id, PrintFile printFile, LocalDateTime createdAt) {
-        this.id = id;
-        this.printFile = printFile;
-        this.createdAt = createdAt;
     }
 
     @PrePersist
@@ -74,5 +71,13 @@ public class Product {
 
     public void setUpdatedAt(LocalDateTime updatedAt) {
         this.updatedAt = updatedAt;
+    }
+
+    public double getCost() {
+        return cost;
+    }
+
+    public void setCost(double cost) {
+        this.cost = cost;
     }
 }
