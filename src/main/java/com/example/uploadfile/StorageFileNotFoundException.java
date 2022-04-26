@@ -1,12 +1,6 @@
-package com.example;
+package com.example.uploadfile;
 
-import org.springframework.stereotype.Component;
-
-@Component
 public class StorageFileNotFoundException extends StorageException {
-
-    public StorageFileNotFoundException() {
-    }
 
     public StorageFileNotFoundException(String message) {
         super(message);
