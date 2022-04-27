@@ -1,4 +1,4 @@
-add file clas for handle uploadeing files 
-revise about uploadeing files to pring boot 
+add file class for handle uploadeing files 
+revise about uploadeing files to Spring boot 
 upload liquidbase schema 
 make application running (finally)
